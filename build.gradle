@@ -1,27 +1,66 @@
-plugins {
-    id 'org.springframework.boot' version '2.6.2'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
-}
-
-group = 'link.tanxin'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-repositories {
-    maven {
-        url 'https://maven.aliyun.com/repository/public/'
+buildscript {
+    ext { springBootVersion = '2.6.3' }
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/spring/'
+        }
+        mavenCentral()
     }
-    maven {
-        url 'https://maven.aliyun.com/repository/spring/'
+    dependencies {
+        classpath("org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}")
     }
 }
+allprojects {
+    apply plugin: "java"
+    sourceCompatibility = 11
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    // 统一指定所有项目的资源库
+    repositories {
+        maven {
+            url 'https://maven.aliyun.com/repository/public/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/spring/'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/spring-plugin'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/gradle-plugin'
+        }
+        maven {
+            url 'https://maven.aliyun.com/repository/gradle-plugin'
+        }
+    }
+
+}
+subprojects {
+    apply plugin: 'org.springframework.boot'
+    apply plugin: 'io.spring.dependency-management'
+    [compileJava, compileTestJava, javadoc]*.options*.encoding = 'UTF-8'
+
+    ext {
+        set('springCloudVersion', "2021.0.0")
+    }
+
+    dependencies {
+        // lombok
+        compileOnly 'org.projectlombok:lombok'
+        annotationProcessor 'org.projectlombok:lombok'
+        // spring boot
+        implementation 'org.springframework.boot:spring-boot-starter'
+        testImplementation 'org.springframework.boot:spring-boot-starter-test'
+        //spring cloud
+        implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
+
+    }
+    dependencyManagement {
+        imports {
+            mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
+        }
+    }
 }
 
-test {
-    useJUnitPlatform()
-}

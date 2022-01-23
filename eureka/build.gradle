@@ -1,37 +1,12 @@
-plugins {
-    id 'org.springframework.boot' version '2.6.2'
-    id 'io.spring.dependency-management' version '1.0.11.RELEASE'
-    id 'java'
+jar {
+    enabled = true
 }
-
-group = 'link.tanxin.nemo'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '11'
-
-repositories {
-    maven {
-        url 'https://maven.aliyun.com/repository/public/'
-    }
-    maven {
-        url 'https://maven.aliyun.com/repository/spring/'
-    }
-}
-
-ext {
-    set('springCloudVersion', "2021.0.0")
-}
+version '1.0.0'
 
 dependencies {
+    implementation 'org.springframework.boot:spring-boot-starter-web'
     implementation 'org.springframework.cloud:spring-cloud-starter-netflix-eureka-server'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
 }
 
-dependencyManagement {
-    imports {
-        mavenBom "org.springframework.cloud:spring-cloud-dependencies:${springCloudVersion}"
-    }
-}
 
-test {
-    useJUnitPlatform()
-}
+
