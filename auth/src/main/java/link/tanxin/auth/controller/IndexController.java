@@ -17,7 +17,6 @@ public class IndexController {
     @GetMapping("index")
     public Mono<String> index() {
 
-        Mono<String> mono = Mono.just("hello world!");
-        return mono;
+        return Mono.just("hello world!");
     }
 }
