@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- 配置文件修改时重新加载，默认true -->
+<configuration scan="true">
+    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
+    <springProperty scope="context" name="CATALINA_BASE" source="logging.path"/>
+    <springProperty scope="context" name="APPLICATION_NAME" source="spring.application.name"/>
+
+    <!--    <property name="CATALINA_BASE" value="/var/logs/nemo/"/>-->
+
+    <!-- 控制台输出 -->
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder charset="UTF-8">
+            <!-- 输出日志记录格式 -->
+            <pattern>%red(%d{yyyy-MM-dd HH:mm:ss}) %green([%thread]) %highlight(%-5level) %boldMagenta(%logger{10}) - %cyan(%msg%n)</pattern>
+        </encoder>
+    </appender>
+
+    <!--获取比info级别高(包括info级别)但除error级别的日志-->
+    <appender name="INFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>DENY</onMatch>
+            <onMismatch>ACCEPT</onMismatch>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <!-- 输出文件路径+文件名 -->
+            <fileNamePattern>${CATALINA_BASE}/${APPLICATION_NAME}_DEBUG.%d{yyyyMMdd}.log</fileNamePattern>
+            <!-- 保存30天的日志 -->
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <!-- 输出日志记录格式 -->
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <!-- 获取error -->
+    <appender name="ERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <!--        <file>${CATALINA_BASE}/${APPLICATION_NAME}_INFO.log</file>-->
+        <filter class="ch.qos.logback.classic.filter.ThresholdFilter">
+            <level>ERROR</level>
+        </filter>
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${CATALINA_BASE}/${APPLICATION_NAME}_INFO.%d{yyyyMMdd}.log</fileNamePattern>
+            <maxHistory>30</maxHistory>
+        </rollingPolicy>
+        <encoder charset="UTF-8">
+            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</pattern>
+        </encoder>
+    </appender>
+
+
+    <!-- 设置日志输出级别 -->
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+        <appender-ref ref="INFO"/>
+        <appender-ref ref="ERROR"/>
+    </root>
+
+</configuration>
