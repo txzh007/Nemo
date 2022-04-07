@@ -16,7 +16,6 @@ import reactor.core.publisher.Mono;
 public class IndexController {
     @GetMapping("index")
     public Mono<String> index() {
-
         return Mono.just("hello world!");
     }
 }
