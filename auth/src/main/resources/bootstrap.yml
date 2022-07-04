@@ -16,7 +16,5 @@ spring:
         refresh-enabled: true
         shared-configs: #自定义 公共配置
           - data-id: public.yml
-
-logging:
-  config: classpath:logback-nemo.xml
-  path: /Users/tan/logs/nemo/
+            group: tanxin
+            refresh: true

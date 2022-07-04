@@ -18,6 +18,10 @@ spring:
       ribbon:
         enabled: false
     nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        group: develop-local
+        namespace: nemo-test
       config:
         file-extension: yml
         group: tanxin
@@ -25,7 +29,7 @@ spring:
         refresh-enabled: true
         shared-configs:
           - data-id: public.yml
-      discovery:
-        group: develop-local
-        namespace: nemo-test
-      server-addr: 127.0.0.1:8848
+            group: tanxin
+            refresh: true
+
+
