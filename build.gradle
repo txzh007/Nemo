@@ -63,7 +63,11 @@ subprojects {
         implementation 'org.springframework.cloud:spring-cloud-starter-sleuth'
         //spring cloud alibaba
         implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-discovery:2021.1'
-
+        implementation 'com.alibaba.cloud:spring-cloud-starter-alibaba-nacos-config:2021.1'
+        //jackson
+        implementation 'org.springframework.boot:spring-boot-starter-json'
+        //utils
+        implementation 'org.apache.commons:commons-lang3:3.7'
     }
     dependencyManagement {
         imports {

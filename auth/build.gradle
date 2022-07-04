@@ -6,11 +6,8 @@ sourceCompatibility = '11'
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-webflux'
     testImplementation 'io.projectreactor:reactor-test'
-//    implementation 'org.springframework.boot:spring-boot-starter-security'
     implementation 'org.springframework.boot:spring-boot-starter-data-r2dbc'
     runtimeOnly 'dev.miku:r2dbc-mysql'
-//    runtimeOnly 'mysql:mysql-connector-java'
-
     implementation(project(':_common'))
 }
 

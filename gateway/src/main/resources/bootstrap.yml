@@ -1,0 +1,31 @@
+server:
+  port: 8088
+spring:
+  application:
+    name: gateway
+  cloud:
+    config:
+      override-none: true
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+    loadbalancer:
+      cache:
+        caffeine:
+          spec: initialCapacity=500,expireAfterWrite=5s
+        enabled: false
+      ribbon:
+        enabled: false
+    nacos:
+      config:
+        file-extension: yml
+        group: tanxin
+        namespace: nemo-test
+        refresh-enabled: true
+        shared-configs:
+          - data-id: public.yml
+      discovery:
+        group: develop-local
+        namespace: nemo-test
+      server-addr: 127.0.0.1:8848

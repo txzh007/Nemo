@@ -24,12 +24,10 @@ public class JwtUtil {
     private static final Long EXP_TIME = 1000 * 60 * 60 * 2L;
 
     /**
-     * Salt 密码
+     * Token Salt
      */
 
-    private static final String SALT = "LIUXINTONGILOVEUxxxxxxxxxxxxxxxxxxxxxxxxxxt";
-
-    public static final String PASSWORDSALT = "163029";
+    private static final String SALT = "LIUXINTONGILOVEUXXXXXXXXXXXXXXXXXXXXXXT0106163029";
 
     private static Key getKey() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(SALT));

@@ -1,0 +1,22 @@
+server:
+  port: 8070
+spring:
+  application:
+    name: auth
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: nemo-test
+        group: develop-local
+      config:
+        namespace: nemo-test
+        group: tanxin
+        file-extension: yml # 文件后缀名
+        refresh-enabled: true
+        shared-configs: #自定义 公共配置
+          - data-id: public.yml
+
+logging:
+  config: classpath:logback-nemo.xml
+  path: /Users/tan/logs/nemo/
