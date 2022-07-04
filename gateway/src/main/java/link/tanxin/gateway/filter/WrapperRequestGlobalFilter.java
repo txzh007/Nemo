@@ -35,6 +35,7 @@ import org.springframework.web.server.ServerWebExchange;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import javax.validation.constraints.NotNull;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
@@ -64,7 +65,7 @@ public class WrapperRequestGlobalFilter implements GlobalFilter, Ordered {
         String scheme = request.getURI()
                 .getScheme();
         log.info("请求地址:{}", request.getURI());
-        if ("websocket".equals(scheme)) {
+        if (StringUtils.equals("websocket", scheme)) {
             return chain.filter(exchange);
         }
         //获取response的 返回数据
