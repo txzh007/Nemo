@@ -1,6 +1,5 @@
 package link.tanxin.auth.controller;
 
-
 import link.tanxin.auth.service.AuthService;
 import link.tanxin.common.exception.BusinessException;
 import link.tanxin.common.request.CodeMessage;

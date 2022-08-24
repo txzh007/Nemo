@@ -26,7 +26,6 @@ public class Result<T> {
         this.data = data;
     }
 
-
     public Result(int code, String message) {
         this.code = code;
         this.message = message;
@@ -36,6 +35,11 @@ public class Result<T> {
     /**
      * 成功时候的调用
      */
+
+    public static <T> Result<T> succeeded() {
+        return succeeded(CodeMessage.SUCCESS.getCode(), null, CodeMessage.SUCCESS.getMessage());
+    }
+
     public static <T> Result<T> succeeded(T data) {
         return succeeded(CodeMessage.SUCCESS.getCode(), data, CodeMessage.SUCCESS.getMessage());
     }
@@ -64,6 +68,10 @@ public class Result<T> {
 
     public static <T> Result<T> failed(CodeMessage codeMessage) {
         return new Result<>(codeMessage.getCode(), codeMessage.getMessage());
+    }
+
+    public static <T> Result<T> failed(String message) {
+        return new Result<>(CodeMessage.SERVER_ERROR.getCode(), message);
     }
 
     public static <T> Result<T> failed(int code, String message) {

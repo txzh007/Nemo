@@ -6,7 +6,11 @@ import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
+import org.springframework.stereotype.Component;
 
+import javax.annotation.PostConstruct;
 import java.security.Key;
 import java.util.Date;
 import java.util.Map;
@@ -17,17 +21,21 @@ import java.util.Map;
  * @author tan
  */
 @Slf4j
+@Component
 public class JwtUtil {
     /**
      * 过期时间 这里是两小时
      */
-    private static final Long EXP_TIME = 1000 * 60 * 60 * 2L;
+
+    private static Long EXP_TIME;
 
     /**
      * Token Salt
      */
+    private static String SALT;
 
-    private static final String SALT = "LIUXINTONGILOVEUXXXXXXXXXXXXXXXXXXXXXXT0106163029";
+    @Autowired
+    private Environment env;
 
     private static Key getKey() {
         return Keys.hmacShaKeyFor(Decoders.BASE64.decode(SALT));
@@ -41,8 +49,11 @@ public class JwtUtil {
      * @return jwt
      */
     public static <T> String createToken(Map<String, Object> map) {
-        return Jwts.builder().setClaims(map).setExpiration(new Date(System.currentTimeMillis() + EXP_TIME)).signWith(getKey()).compact();
-
+        return Jwts.builder()
+                .setClaims(map)
+                .setExpiration(new Date(System.currentTimeMillis() + EXP_TIME))
+                .signWith(getKey())
+                .compact();
     }
 
     /**
@@ -53,7 +64,11 @@ public class JwtUtil {
      */
     public static Map<String, Object> getClaims(String token) {
         try {
-            return Jwts.parserBuilder().setSigningKey(getKey()).build().parseClaimsJws(token).getBody();
+            return Jwts.parserBuilder()
+                    .setSigningKey(getKey())
+                    .build()
+                    .parseClaimsJws(token)
+                    .getBody();
         } catch (IllegalArgumentException | JwtException e) {
             log.warn("JWT 解析失败 {1}", e);
         }
@@ -69,10 +84,16 @@ public class JwtUtil {
     public static Boolean verifyToken(String token) {
         Claims claims = (Claims) getClaims(token);
         if (null != claims) {
-            return claims.getExpiration().after(new Date());
+            return claims.getExpiration()
+                    .after(new Date());
         }
         return false;
     }
 
 
+    @PostConstruct
+    public void init() {
+        EXP_TIME = Long.valueOf(env.getProperty("nemo.jwt.expiration-seconds", "72000"));
+        SALT = env.getProperty("nemo.jwt.secret-key", "LIUXINTONGILOVEUXXXXXXXXXXXXXXXXXXXXXXT0106163029");
+    }
 }

@@ -2,4 +2,5 @@ rootProject.name = 'Nemo'
 
 include '_common'
 include 'auth'
+include 'template'
 include 'gateway'

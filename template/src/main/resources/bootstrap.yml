@@ -1,0 +1,20 @@
+server:
+  port: 8071
+spring:
+  application:
+    name: template
+  cloud:
+    nacos:
+      server-addr: 127.0.0.1:8848
+      discovery:
+        namespace: nemo-test
+        group: develop-local
+      config:
+        namespace: nemo-test
+        group: tanxin
+        file-extension: yml # 文件后缀名
+        refresh-enabled: true
+        shared-configs: #自定义 公共配置
+          - data-id: public.yml
+            group: tanxin
+            refresh: true

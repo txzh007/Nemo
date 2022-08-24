@@ -1,12 +1,9 @@
-package link.tanxin.common.entity;
+package link.tanxin.common.entity.auth;
 
 import lombok.*;
 import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
 
@@ -15,8 +12,7 @@ import javax.persistence.Id;
  */
 @Data
 @Table("user_roles_ relation")
-public class AuthUserRolesRelation {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class UserRolesRelation {
     @Id
     @Column("id")
     private Long id;

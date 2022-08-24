@@ -1,14 +1,11 @@
-package link.tanxin.common.entity;
+package link.tanxin.common.entity.auth;
 
 import lombok.*;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Column;
 import org.springframework.data.relational.core.mapping.Table;
 
-import javax.persistence.*;
 import java.time.LocalDateTime;
-import java.util.Date;
-import java.util.Locale;
-import java.util.Objects;
 
 /**
  * @author tan
@@ -16,10 +13,10 @@ import java.util.Objects;
 
 @Data
 @Table("user")
-public class AuthUser {
+public class User {
 
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
+    @Column("id")
     private Long id;
 
     private String username;

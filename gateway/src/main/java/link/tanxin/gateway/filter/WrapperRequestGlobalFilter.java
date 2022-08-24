@@ -48,7 +48,6 @@ import java.nio.charset.StandardCharsets;
  */
 @Component
 @Slf4j
-
 public class WrapperRequestGlobalFilter implements GlobalFilter, Ordered {
 
     private final ObjectMapper jsonMapper;
@@ -74,7 +73,6 @@ public class WrapperRequestGlobalFilter implements GlobalFilter, Ordered {
         HttpStatus statusCode = response.getStatusCode();
         if (statusCode == HttpStatus.OK) {
             //当然要复制一份请求啦，不然消费完就没了
-
             ServerHttpResponseDecorator decoratedResponse = new ServerHttpResponseDecorator(response) {
                 @Override
                 public boolean setStatusCode(HttpStatus status) {
